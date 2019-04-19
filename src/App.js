@@ -1,25 +1,37 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import $ from 'jquery';
+
+// css import
+import './css/bootstrap.min.css';
+import './css/metisMenu.min.css';
+import './css/startmin.css';
+import './css/font-awesome.min.css';
+
+// js import
+import './js/bootstrap.min.js';
+import './js/metisMenu.min.js';
+import './js/startmin.js';
+
+import Menu from './components/Menu';
 
 class App extends Component {
+  componentDidMount() {
+    $('#side-menu').metisMenu();
+  }
+
+  componentDidUpdate() {
+    $('#side-menu').metisMenu();
+  }
+
   render() {
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
+      <div id="root">
+        <div id="wrapper">
+          <Menu />
+          <div id="page-wrapper">
+            {this.props.children}
+          </div>
+        </div>
       </div>
     );
   }
