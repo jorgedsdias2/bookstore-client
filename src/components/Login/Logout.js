@@ -2,11 +2,12 @@ import { Component } from 'react';
 
 export default class Logout extends Component {
 
-    componentWillMount(){
+    componentWillMount() {
+        localStorage.removeItem('x-access-token');
         this.props.history.push('/login');
     }
 
-    render(){
+    render() {
         return null;
     }
 }
