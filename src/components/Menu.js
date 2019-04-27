@@ -7,7 +7,7 @@ export default class Menu extends Component {
             <div>
                 <nav className="navbar navbar-inverse navbar-fixed-top" role="navigation">
                     <div className="navbar-header">
-                        <a className="navbar-brand" href="index.html">Bookstore</a>
+                        <Link className="navbar-brand" href="index.html">Bookstore</Link>
                     </div>
 
                     <button type="button" className="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -18,18 +18,18 @@ export default class Menu extends Component {
                     </button>
 
                     <ul className="nav navbar-nav navbar-left navbar-top-links">
-                        <li><a href="#"><i className="fa fa-home fa-fw"></i> Website</a></li>
+                        <li><Link to="#"><i className="fa fa-home fa-fw"></i> Website</Link></li>
                     </ul>
 
                     <ul className="nav navbar-right navbar-top-links">
                         <li className="dropdown">
-                            <a className="dropdown-toggle" data-toggle="dropdown" href="#">
+                            <Link className="dropdown-toggle" data-toggle="dropdown" href="#">
                                 <i className="fa fa-user fa-fw"></i> secondtruth <b className="caret"></b>
-                            </a>
+                            </Link>
                             <ul className="dropdown-menu dropdown-user">
-                                <li><a href="#"><i className="fa fa-user fa-fw"></i> User Profile</a>
+                                <li><Link to="#"><i className="fa fa-user fa-fw"></i> User Profile</Link>
                                 </li>
-                                <li><a href="#"><i className="fa fa-gear fa-fw"></i> Settings</a>
+                                <li><Link to="#"><i className="fa fa-gear fa-fw"></i> Settings</Link>
                                 </li>
                                 <li className="divider"></li>
                                 <li><Link to="/logout"><i className="fa fa-sign-out fa-fw"></i> Logout</Link>
@@ -55,7 +55,7 @@ export default class Menu extends Component {
                                     <Link to="/" className="active"><i className="fa fa-dashboard fa-fw"></i> Dashboard</Link>
                                 </li>
                                 <li>
-                                    <a href="#"><i className="fa fa-edit fa-fw"></i> Authors<span className="fa arrow"></span></a>
+                                    <Link to="#"><i className="fa fa-edit fa-fw"></i> Authors<span className="fa arrow"></span></Link>
                                     <ul className="nav nav-second-level">
                                     <li>
                                         <Link to="/authors">List Authors</Link>
@@ -66,7 +66,7 @@ export default class Menu extends Component {
                                     </ul>
                                 </li>
                                 <li>
-                                    <a href="#"><i className="fa fa-users fa-fw"></i> Users<span className="fa arrow"></span></a>
+                                    <Link to="#"><i className="fa fa-users fa-fw"></i> Users<span className="fa arrow"></span></Link>
                                     <ul className="nav nav-second-level">
                                         <li>
                                             <Link to="/users">List Users</Link>

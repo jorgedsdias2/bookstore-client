@@ -16,6 +16,11 @@ import Menu from './components/Menu';
 
 class App extends Component {
   componentDidMount() {
+    if(localStorage.getItem('x-access-token') === null) {
+      localStorage.setItem('msg', 'You can\'t access this address');
+      this.props.children.props.history.push('/login');
+    }
+
     $('#side-menu').metisMenu();
   }
 

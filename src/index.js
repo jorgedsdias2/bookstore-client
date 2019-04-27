@@ -1,34 +1,14 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import App from './App';
 import * as serviceWorker from './serviceWorker';
 import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
 
 import Dashboard from './components/Dashboard/Dashboard';
 import Author from './components/Author/Author';
-import Login from './components/Login/Login';
 import FormLogin from './components/Login/FormLogin';
 import Logout from './components/Login/Logout';
-
-const AppRoute = ({component: Component, ...rest}) => {
-    return (
-        <Route {...rest} render={matchProps => (
-            <App>
-                <Component {...matchProps} />
-            </App>
-        )} />
-    )
-};
-
-const LoginRoute = ({component: Component, ...rest}) => {
-    return (
-        <Route {...rest} render={matchProps => (
-            <Login>
-                <Component {...matchProps} />
-            </Login>
-        )} />
-    )
-};
+import AppRoute from './routes/AppRoute';
+import LoginRoute from './routes/LoginRoute';
 
 ReactDOM.render(
     (<Router>

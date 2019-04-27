@@ -4,11 +4,13 @@ export default class FormLogin extends Component {
 
     constructor(props) {
         super(props);
-        this.state = {msg:''};
+        this.state = {msg:localStorage.getItem('msg')};
     }
 
     send(event) {
         event.preventDefault();
+        
+        localStorage.setItem('msg', '');
 
         const request = {
             method: 'POST',
