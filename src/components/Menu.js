@@ -7,7 +7,7 @@ export default class Menu extends Component {
             <div>
                 <nav className="navbar navbar-inverse navbar-fixed-top" role="navigation">
                     <div className="navbar-header">
-                        <Link className="navbar-brand" href="index.html">Bookstore</Link>
+                        <Link to="" className="navbar-brand" href="index.html">Bookstore</Link>
                     </div>
 
                     <button type="button" className="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -23,7 +23,7 @@ export default class Menu extends Component {
 
                     <ul className="nav navbar-right navbar-top-links">
                         <li className="dropdown">
-                            <Link className="dropdown-toggle" data-toggle="dropdown" href="#">
+                            <Link to="" className="dropdown-toggle" data-toggle="dropdown" href="#">
                                 <i className="fa fa-user fa-fw"></i> secondtruth <b className="caret"></b>
                             </Link>
                             <ul className="dropdown-menu dropdown-user">
