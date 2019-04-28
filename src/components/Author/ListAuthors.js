@@ -14,6 +14,7 @@ export default class ListAuthors extends Component {
     constructor(props) {
         super(props);
         this.state = {msg:localStorage.getItem('msg'), alert:'', authors:[]};
+        this.actionPage = this.actionPage.bind(this);
     }
 
     componentDidMount() {
@@ -43,6 +44,11 @@ export default class ListAuthors extends Component {
             retrieve: true,
             responsive: true
         });
+    }
+
+    actionPage(event, page) {
+        event.preventDefault();
+        this.props.history.push(page);
     }
 
     render() {
@@ -86,12 +92,12 @@ export default class ListAuthors extends Component {
                                                             <tr key={author._id}>
                                                                 <td>{author.name}</td>
                                                                 <td className="col-md-2">
-                                                                    <button className="btn btn-primary"><span className="glyphicon glyphicon-edit"></span></button>&nbsp;
+                                                                    <button onClick={(e) => {this.actionPage(e, `/authors/author/${author._id}`)}} className="btn btn-primary"><span className="glyphicon glyphicon-edit"></span></button>&nbsp;
                                                                     <button className="btn btn-danger"><span className="glyphicon glyphicon-remove"></span></button>
                                                                 </td>
                                                             </tr>
                                                         );
-                                                    })
+                                                    }.bind(this))
                                                 }
                                             </tbody>
                                         </table>

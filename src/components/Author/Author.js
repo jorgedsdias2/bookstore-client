@@ -9,7 +9,7 @@ export default class Author extends Component {
         return (
             <div>
                 <Route exact path={`${this.props.match.url}`} component={ListAuthors} />
-                <Route path={`${this.props.match.url}/add`} component={AddAuthor} />
+                <Route path={`${this.props.match.url}/author/:id?`} component={AddAuthor} />
             </div>
         );
     }

@@ -4,7 +4,23 @@ export default class AddAuthor extends Component {
 
     constructor(props) {
         super(props);
-        this.state = {msg:localStorage.getItem('msg'), alert: ''};
+        this.state = {
+            id: this.props.match.params.id,
+            urlSend: '', method: '',
+            msg:localStorage.getItem('msg'),
+            alert: ''
+        };
+    }
+
+    componentDidMount() {
+        let urlSend = '';
+        if(this.state.id === undefined) {
+            this.setState({urlSend: 'http://localhost:3000/api/authors/author'});
+            this.setState({method: 'POST'});
+        } else {
+            this.setState({urlSend: `http://localhost:3000/api/authors/author/${this.state.id}`});
+            this.setState({method: 'PUT'});
+        }
     }
 
     send(event) {
@@ -13,7 +29,7 @@ export default class AddAuthor extends Component {
         localStorage.setItem('msg', '');
 
         const request = {
-            method: 'POST',
+            method: this.state.method,
             body: JSON.stringify({name:this.name.value}),
             headers: new Headers({
                 'Content-type': 'application/json',
@@ -21,7 +37,7 @@ export default class AddAuthor extends Component {
             })
         };
 
-        fetch('http://localhost:3000/api/authors/author', request).then(response => {
+        fetch(this.state.urlSend, request).then(response => {
             if(response.ok) {
                 return response.json();
             } else {

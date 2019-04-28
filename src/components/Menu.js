@@ -61,7 +61,7 @@ export default class Menu extends Component {
                                         <Link to="/authors">List Authors</Link>
                                     </li>
                                     <li>
-                                        <Link to="/authors/add">Add Author</Link>
+                                        <Link to="/authors/author">Add Author</Link>
                                     </li>
                                     </ul>
                                 </li>
