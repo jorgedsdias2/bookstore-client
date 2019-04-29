@@ -55,7 +55,7 @@ export default class ListAuthors extends Component {
         let showMessage = '';
         if(this.state.msg) {
             showMessage =
-            <div className={`alert alert-${this.state.alert}`} role="alert">
+            <div className="alert alert-success" role="alert">
                 {this.state.msg}
             </div>
         }
@@ -92,7 +92,7 @@ export default class ListAuthors extends Component {
                                                             <tr key={author._id}>
                                                                 <td>{author.name}</td>
                                                                 <td className="col-md-2">
-                                                                    <button onClick={(e) => {this.actionPage(e, `/authors/author/${author._id}`)}} className="btn btn-primary"><span className="glyphicon glyphicon-edit"></span></button>&nbsp;
+                                                                    <button onClick={(e) => {this.actionPage(e, `/authors/edit/${author._id}`)}} className="btn btn-primary"><span className="glyphicon glyphicon-edit"></span></button>&nbsp;
                                                                     <button className="btn btn-danger"><span className="glyphicon glyphicon-remove"></span></button>
                                                                 </td>
                                                             </tr>

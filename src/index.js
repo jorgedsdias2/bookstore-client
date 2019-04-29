@@ -4,7 +4,7 @@ import * as serviceWorker from './serviceWorker';
 import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
 
 import Dashboard from './components/Dashboard/Dashboard';
-import Author from './components/Author/Author';
+import RouteAuthor from './components/Author/RouteAuthor';
 import FormLogin from './components/Login/FormLogin';
 import Logout from './components/Login/Logout';
 import AppRoute from './routes/AppRoute';
@@ -14,7 +14,7 @@ ReactDOM.render(
     (<Router>
         <Switch>
             <AppRoute exact path="/" component={Dashboard} />
-            <AppRoute path="/authors" component={Author} />
+            <AppRoute path="/authors" component={RouteAuthor} />
             <LoginRoute path="/login" component={FormLogin} />
             <Route path="/logout" component={Logout} />
         </Switch>
