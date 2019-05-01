@@ -9,7 +9,7 @@ import '../../css/dataTables/dataTables.responsive.css';
 import '../../js/dataTables/jquery.dataTables.min.js';
 import '../../js/dataTables/dataTables.bootstrap.min.js';
 
-export default class ListAuthors extends Component {
+export default class AuthorList extends Component {
 
     constructor(props) {
         super(props);

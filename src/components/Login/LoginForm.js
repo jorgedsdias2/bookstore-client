@@ -1,37 +1,25 @@
 import React, { Component } from 'react';
 
-export default class FormLogin extends Component {
+import LoginApi from '../../api/LoginApi';
+import store from '../../store';
+
+export default class LoginForm extends Component {
 
     constructor(props) {
         super(props);
-        this.state = {msg:localStorage.getItem('msg')};
+        this.state = {msg:''};
+        this.send = this.send.bind(this);
+    }
+
+    componentDidMount() {
+        store.subscribe(() => {
+            this.setState({msg: store.getState().notification});
+        });
     }
 
     send(event) {
         event.preventDefault();
-        
-        localStorage.setItem('msg', '');
-
-        const request = {
-            method: 'POST',
-            body: JSON.stringify({email:this.email.value,password:this.password.value}),
-            headers: new Headers({
-                'Content-type': 'application/json'
-            })
-        };
-
-        fetch('http://localhost:3000/api/auth/login', request).then(response => {
-            if(response.ok) {
-                return response.json();
-            } else {
-                throw new Error('Invalid Login. Please try again!');
-            }
-        }).then(response => {
-            localStorage.setItem('x-access-token', response.token);
-            this.props.history.push('/');
-        }).catch(error => {
-            this.setState({msg: error.message});
-        });
+        store.dispatch(LoginApi.send(this.props, this.email.value, this.password.value));
     }
 
     render() {
@@ -53,7 +41,7 @@ export default class FormLogin extends Component {
                             </div>
                             <div className="panel-body">
                                 {showMessage}
-                                <form onSubmit={this.send.bind(this)}>
+                                <form onSubmit={this.send}>
                                     <fieldset>
                                         <div className="form-group">
                                             <input className="form-control" placeholder="E-mail" type="email" autoFocus ref={(input) => this.email = input} />

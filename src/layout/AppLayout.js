@@ -2,7 +2,7 @@ import React from 'react';
 import App from '../App';
 import {Route} from 'react-router-dom';
 
-const AppRoute = ({component: Component, ...rest}) => {
+const AppLayout = ({component: Component, ...rest}) => {
     return (
         <Route {...rest} render={matchProps => (
             <App>
@@ -12,4 +12,4 @@ const AppRoute = ({component: Component, ...rest}) => {
     )
 };
 
-export default AppRoute;
+export default AppLayout;

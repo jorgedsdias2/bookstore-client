@@ -2,7 +2,7 @@ import React from 'react';
 import Login from '../components/Login/Login';
 import {Route} from 'react-router-dom';
 
-const LoginRoute = ({component: Component, ...rest}) => {
+const LoginLayout = ({component: Component, ...rest}) => {
     return (
         <Route {...rest} render={matchProps => (
             <Login>
@@ -12,4 +12,4 @@ const LoginRoute = ({component: Component, ...rest}) => {
     )
 };
 
-export default LoginRoute;
+export default LoginLayout;

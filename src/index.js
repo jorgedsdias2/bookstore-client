@@ -2,23 +2,29 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import * as serviceWorker from './serviceWorker';
 import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
+import {Provider} from 'react-redux';
 
 import Dashboard from './components/Dashboard/Dashboard';
-import RouteAuthor from './components/Author/RouteAuthor';
-import FormLogin from './components/Login/FormLogin';
+import AuthorRoute from './components/Author/AuthorRoute';
+import LoginForm from './components/Login/LoginForm';
 import Logout from './components/Login/Logout';
-import AppRoute from './routes/AppRoute';
-import LoginRoute from './routes/LoginRoute';
+import AppLayout from './layout/AppLayout';
+import LoginLayout from './layout/LoginLayout';
+import store from './store';
 
 ReactDOM.render(
-    (<Router>
-        <Switch>
-            <AppRoute exact path="/" component={Dashboard} />
-            <AppRoute path="/authors" component={RouteAuthor} />
-            <LoginRoute path="/login" component={FormLogin} />
-            <Route path="/logout" component={Logout} />
-        </Switch>
-    </Router>),
+    (
+        <Provider store={store}>
+            <Router>
+                <Switch>
+                    <AppLayout exact path="/" component={Dashboard} />
+                    <AppLayout path="/authors" component={AuthorRoute} />
+                    <LoginLayout path="/login" component={LoginForm} />
+                    <Route path="/logout" component={Logout} />
+                </Switch>
+            </Router>
+        </Provider>
+    ),
     document.getElementById('root')
 );
 
