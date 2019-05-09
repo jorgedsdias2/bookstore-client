@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
+import {connect} from 'react-redux';
 
 import LoginApi from '../../api/LoginApi';
-import store from '../../store';
 
-export default class LoginForm extends Component {
+class LoginForm extends Component {
 
     constructor(props) {
         super(props);
@@ -12,14 +12,28 @@ export default class LoginForm extends Component {
     }
 
     componentDidMount() {
-        store.subscribe(() => {
-            this.setState({msg: store.getState().notification});
-        });
+        console.log(nextProps);
     }
+
+    componentWillReceiveProps(nextProps) {
+        this.setState({msg: nextProps.msg});
+    }
+
+    // componentDidUpdate() {
+    //     console.log('3');
+    // }
+
+    // componentWillMount() {
+    //     console.log('4');
+    // }
+
+    // componentDidCatch() {
+    //     console.log('5');
+    // }
 
     send(event) {
         event.preventDefault();
-        store.dispatch(LoginApi.send(this.props, this.email.value, this.password.value));
+        this.props.login(this.props, this.email.value, this.password.value);
     }
 
     render() {
@@ -65,3 +79,19 @@ export default class LoginForm extends Component {
         );
     }
 }
+
+const mapStateToProps = state => {
+    return {msg: state.notification.msg}
+};
+
+const mapDispatchToProps = dispatch => {
+    return {
+        login: (props, emailValue, passwordValue) => {
+            dispatch(LoginApi.login(props, emailValue, passwordValue));
+        }
+    }
+};
+
+const LoginFormContainer = connect(mapStateToProps, mapDispatchToProps) (LoginForm);
+
+export default LoginFormContainer;

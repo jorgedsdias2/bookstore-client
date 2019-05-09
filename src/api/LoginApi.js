@@ -1,7 +1,7 @@
 import {notification} from '../actions/actionCreator';
 
 export default class LoginApi {
-    static send(props, emailValue, passwordValue) {
+    static login(props, emailValue, passwordValue) {
         return dispatch => {
             const request = {
                 method: 'POST',
