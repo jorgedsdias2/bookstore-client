@@ -7,32 +7,20 @@ class LoginForm extends Component {
 
     constructor(props) {
         super(props);
-        this.state = {msg:''};
+        this.state = { msg:localStorage.getItem('msg') };
         this.send = this.send.bind(this);
-    }
-
-    componentDidMount() {
-        console.log(nextProps);
     }
 
     componentWillReceiveProps(nextProps) {
         this.setState({msg: nextProps.msg});
     }
 
-    // componentDidUpdate() {
-    //     console.log('3');
-    // }
-
-    // componentWillMount() {
-    //     console.log('4');
-    // }
-
-    // componentDidCatch() {
-    //     console.log('5');
-    // }
-
     send(event) {
         event.preventDefault();
+        if(this.props.msg) {
+            this.setState({msg: this.props.msg});
+        }
+
         this.props.login(this.props, this.email.value, this.password.value);
     }
 
@@ -42,6 +30,9 @@ class LoginForm extends Component {
             showMessage = 
             <div className="alert alert-warning" role="alert">
                 {this.state.msg}
+                {/* <button type="button" className="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button> */}
             </div>
         }
 
