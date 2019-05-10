@@ -13,6 +13,7 @@ export default class LoginApi {
     
             fetch('http://localhost:3000/api/auth/login', request).then(response => {
                 if(response.ok) {
+                    dispatch(notification(''));
                     return response.json();
                 } else {
                     throw new Error('Invalid Login. Please try again!');

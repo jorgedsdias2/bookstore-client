@@ -27,9 +27,6 @@ class LoginForm extends Component {
             showMessage = 
             <div className="alert alert-warning" role="alert">
                 {this.state.msg}
-                {/* <button type="button" className="close" data-dismiss="alert" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button> */}
             </div>
         }
 
