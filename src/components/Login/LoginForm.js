@@ -7,7 +7,7 @@ class LoginForm extends Component {
 
     constructor(props) {
         super(props);
-        this.state = { msg:localStorage.getItem('msg') };
+        this.state = {msg:localStorage.getItem('msg')};
         this.send = this.send.bind(this);
     }
 
@@ -17,10 +17,7 @@ class LoginForm extends Component {
 
     send(event) {
         event.preventDefault();
-        if(this.props.msg) {
-            this.setState({msg: this.props.msg});
-        }
-
+        if(this.props.msg) {this.setState({msg: this.props.msg})}
         this.props.login(this.props, this.email.value, this.password.value);
     }
 
