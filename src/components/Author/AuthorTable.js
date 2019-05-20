@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import {connect} from 'react-redux';
+import PropTypes from 'prop-types';
+import {withRouter} from "react-router";
 
 import AuthorApi from '../../api/AuthorApi';
 
@@ -17,7 +19,7 @@ export class AuthorTable extends Component {
 
     constructor(props) {
         super(props);
-        this.actionPage = this.actionPage.bind(this);
+        this.edit = this.edit.bind(this);
         console.log(this.props);
     }
 
@@ -32,10 +34,16 @@ export class AuthorTable extends Component {
         });
     }
 
-    actionPage(event, page) {
+    edit(event, page) {
         event.preventDefault();
-        //this.props.history.push(page);
+        this.props.history.push(page);
     }
+
+    static propTypes = {
+        match: PropTypes.object.isRequired,
+        location: PropTypes.object.isRequired,
+        history: PropTypes.object.isRequired
+    };
 
     render() {
         if(this.props.authors) {
@@ -71,7 +79,7 @@ export class AuthorTable extends Component {
                                                                 <tr key={author._id}>
                                                                     <td>{author.name}</td>
                                                                     <td className="col-md-2">
-                                                                        <button onClick={(e) => {this.actionPage(e, `/authors/edit/${author._id}`)}} className="btn btn-primary"><span className="glyphicon glyphicon-edit"></span></button>&nbsp;
+                                                                        <button onClick={(e) => {this.edit(e, `/authors/edit/${author._id}`)}} className="btn btn-primary"><span className="glyphicon glyphicon-edit"></span></button>&nbsp;
                                                                         <button className="btn btn-danger"><span className="glyphicon glyphicon-remove"></span></button>
                                                                     </td>
                                                                 </tr>
@@ -110,6 +118,6 @@ const mapDispatchToProps = dispatch => {
     }
 };
 
-const AuthorTableContainer = connect(mapStateToProps, mapDispatchToProps)(AuthorTable);
-
-export default AuthorTableContainer;
+const AuthorTableContainer = connect(mapStateToProps, mapDispatchToProps) (AuthorTable);
+const AuthorTableWithRouter = withRouter(AuthorTableContainer);
+export default AuthorTableWithRouter;

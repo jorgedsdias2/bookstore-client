@@ -9,7 +9,7 @@ import LoginForm from './components/Login/LoginForm';
 import Logout from './components/Login/Logout';
 import AppLayout from './layout/AppLayout';
 import LoginLayout from './layout/LoginLayout';
-import AuthorBox from './components/Test/AuthorBox';
+import AuthorBox from './components/Author/AuthorBox';
 import store from './store';
 
 ReactDOM.render(
