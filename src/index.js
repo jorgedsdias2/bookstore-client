@@ -10,6 +10,8 @@ import LoginForm from './components/Login/LoginForm';
 import Logout from './components/Login/Logout';
 import AppLayout from './layout/AppLayout';
 import LoginLayout from './layout/LoginLayout';
+import AuthorBox from './components/Test/AuthorBox';
+import AuthorRouteBox from './components/Test/AuthorRouter';
 import store from './store';
 
 ReactDOM.render(
@@ -18,7 +20,8 @@ ReactDOM.render(
             <Router>
                 <Switch>
                     <AppLayout exact path="/" component={Dashboard} />
-                    <AppLayout path="/authors" component={AuthorRoute} />
+                    {/* <AppLayout path="/authors" component={AuthorRoute} /> */}
+                    <AppLayout path="/authors" component={AuthorRouteBox} />
                     <LoginLayout path="/login" component={LoginForm} />
                     <Route path="/logout" component={Logout} />
                 </Switch>
