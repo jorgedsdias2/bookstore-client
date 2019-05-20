@@ -15,10 +15,16 @@ import '../../js/dataTables/dataTables.bootstrap.min.js';
 
 export class AuthorTable extends Component {
 
+    constructor(props) {
+        super(props);
+        this.actionPage = this.actionPage.bind(this);
+        console.log(this.props);
+    }
+
     componentWillMount() {
         this.props.getAuthors();
     }
-    
+
     componentDidMount() {
         $('#dataTables').DataTable({
             retrieve: true,
@@ -26,33 +32,59 @@ export class AuthorTable extends Component {
         });
     }
 
+    actionPage(event, page) {
+        event.preventDefault();
+        //this.props.history.push(page);
+    }
+
     render() {
         if(this.props.authors) {
             return (
                 <div>
-                    <div className="table-responsive">
-                        {this.props.showMessage}
-                        <table className="table table-striped table-bordered table-hover" id="dataTables">
-                            <thead>
-                                <tr>
-                                    <th>Author Name</th>
-                                    <th>Actions</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {
-                                    this.props.authors.map(function(author) {
-                                        return (
-                                            <tr key={author._id}>
-                                                <td>{author.name}</td>
-                                                <td className="col-md-2">
-                                                </td>
-                                            </tr>
-                                        );
-                                    })
-                                }
-                            </tbody>
-                        </table>
+                    <div className="container-fluid">
+                        <div className="row">
+                            <div className="col-lg-12">
+                                <h1 className="page-header">List Authors</h1>
+                            </div>
+                        </div>
+
+                        <div className="row">
+                            <div className="col-lg-12">
+                                <div className="panel panel-default">
+                                    <div className="panel-heading">
+                                        An List of Authors
+                                    </div>
+                                    <div className="panel-body">
+                                        <div className="table-responsive">
+                                            {this.props.showMessage}
+                                            <table className="table table-striped table-bordered table-hover" id="dataTables">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Author Name</th>
+                                                        <th>Actions</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    {
+                                                        this.props.authors.map(function(author) {
+                                                            return (
+                                                                <tr key={author._id}>
+                                                                    <td>{author.name}</td>
+                                                                    <td className="col-md-2">
+                                                                        <button onClick={(e) => {this.actionPage(e, `/authors/edit/${author._id}`)}} className="btn btn-primary"><span className="glyphicon glyphicon-edit"></span></button>&nbsp;
+                                                                        <button className="btn btn-danger"><span className="glyphicon glyphicon-remove"></span></button>
+                                                                    </td>
+                                                                </tr>
+                                                            );
+                                                        }.bind(this))
+                                                    }
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             );
