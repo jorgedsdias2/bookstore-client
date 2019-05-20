@@ -1,5 +1,5 @@
 import React from 'react';
-import Login from '../components/Login/Login';
+import Login from '../Login';
 import {Route} from 'react-router-dom';
 
 const LoginLayout = ({component: Component, ...rest}) => {

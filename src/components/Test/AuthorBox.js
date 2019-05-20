@@ -1,92 +1,67 @@
 import React, { Component } from 'react';
-import {connect} from 'react-redux';
+import {Route} from 'react-router-dom';
 
-import AuthorList from './AuthorList';
-import AuthorAdd from './AuthorAdd';
-import AuthorApi from '../../api/AuthorApi';
+import AuthorTable from './AuthorTable';
+import AuthorForm from './AuthorForm';
 
-export class AuthorBox extends Component {
-
-    constructor(props) {
-        super(props);
-        this.state = {msg:'', alert:''};
-        this.addAuthor = this.addAuthor.bind(this);
-    }
-
-    componentDidMount() {
-        if(this.props.match.path === '/authors') {
-            this.props.getAuthors();
-        }
-    }
-
-    showListAuthors(props, showMessage) {
-        if(props.authors) {
-            return (
-                <div>
-                    <AuthorList
-                        authors={props.authors}
-                        showMessage={showMessage}
-                    />
-                </div>
-            );
-        } else {
-            return null;
-        }
-    }
-
-    showAddAuthors(props) {
+export class AuthorAdd extends Component {
+    render() {
         return (
             <div>
-                <AuthorAdd 
-                    send={this.addAuthor}
+                <AuthorForm
+                    title="Add Author"
+                    subtitle="Form to add an author"
+                    button="Add Author"
+                    send={this.props.send}
+                    showMessage={this.props.showMessage}
                 />
             </div>
         );
     }
+}
 
-    addAuthor(event) {
-        event.preventDefault();
-        this.props.addAuthor(this.props);
-    }
-
+export class AuthorList extends Component {
     render() {
-        let showMessage = '';
-        if(this.props.msg) {
-            showMessage = 
-            <div className={`alert alert-${this.props.alert}`} role="alert">
-                {this.props.msg}
-            </div>
-        }
+        return (
+            <div>
+                <div className="container-fluid">
+                    <div className="row">
+                        <div className="col-lg-12">
+                            <h1 className="page-header">List Authors</h1>
+                        </div>
+                    </div>
 
-        if(this.props.match.path === '/authors') {
-            return this.showListAuthors(this.props, showMessage);
-        } else if(this.props.match.path === '/authors/add') {
-            return this.showAddAuthors(this.props);
-        } else {
-            return null;
-        }
+                    <div className="row">
+                        <div className="col-lg-12">
+                            <div className="panel panel-default">
+                                <div className="panel-heading">
+                                    An List of Authors
+                                </div>
+                                <div className="panel-body">
+                                    <AuthorTable showMessage={this.props.showMessage} />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        );
     }
 }
 
-const mapStateToProps = state => {
-    return {
-        authors: state.author.authors,
-        msg: state.notification.msg,
-        alert: state.notification.alert
+export default class AuthorBox extends Component {
+    render() {
+        return (
+            <div>
+                <Route 
+                    exact path={`${this.props.match.url}`} 
+                    render={(props) => <AuthorList {...props} />}
+                />
+                <Route 
+                    exact path={`${this.props.match.url}/add`} 
+                    render={(props) => <AuthorAdd {...props} />}
+                />
+            </div>
+        );
     }
-};
-
-const mapDispatchToProps = dispatch => {
-    return {
-        getAuthors: () => {
-            dispatch(AuthorApi.getAuthors());
-        },
-        addAuthor: (props) => {
-            dispatch(AuthorApi.addAuthor(props));
-        }
-    }
-};
-
-const AuthorBoxContainer = connect(mapStateToProps, mapDispatchToProps)(AuthorBox);
-
-export default AuthorBoxContainer;
+}
