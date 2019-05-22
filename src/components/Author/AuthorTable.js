@@ -20,7 +20,6 @@ export class AuthorTable extends Component {
     constructor(props) {
         super(props);
         this.edit = this.edit.bind(this);
-        console.log(this.props);
     }
 
     componentWillMount() {
@@ -38,12 +37,6 @@ export class AuthorTable extends Component {
         event.preventDefault();
         this.props.history.push(page);
     }
-
-    static propTypes = {
-        match: PropTypes.object.isRequired,
-        location: PropTypes.object.isRequired,
-        history: PropTypes.object.isRequired
-    };
 
     render() {
         if(this.props.authors) {
@@ -102,6 +95,10 @@ export class AuthorTable extends Component {
     }
 }
 
+AuthorTable.propTypes = {
+    history: PropTypes.object.isRequired
+};
+
 const mapStateToProps = state => {
     return {
         authors: state.author.authors,
@@ -118,6 +115,5 @@ const mapDispatchToProps = dispatch => {
     }
 };
 
-const AuthorTableContainer = connect(mapStateToProps, mapDispatchToProps) (AuthorTable);
-const AuthorTableWithRouter = withRouter(AuthorTableContainer);
-export default AuthorTableWithRouter;
+const AuthorTableContainer = withRouter(connect(mapStateToProps, mapDispatchToProps) (AuthorTable));
+export default AuthorTableContainer;

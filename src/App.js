@@ -1,4 +1,7 @@
 import React, { Component } from 'react';
+
+import {notification} from '../src/actions/actionCreator';
+
 import $ from 'jquery';
 
 // css import
@@ -16,10 +19,9 @@ import Menu from './components/Menu';
 
 class App extends Component {
     componentDidMount() {
-        localStorage.setItem('msg', '');
         if(localStorage.getItem('x-access-token') === null) {
-            localStorage.setItem('msg', 'You can\'t access this address');
-            this.props.children.props.history.push('/login');
+            notification('You can\'t access this address');
+            this.props.children.props.history.replace('/login');
         }
 
         $('#side-menu').metisMenu();
@@ -30,16 +32,20 @@ class App extends Component {
     }
 
     render() {
-        return (
-            <div id="root">
-                <div id="wrapper">
-                    <Menu />
-                    <div id="page-wrapper">
-                        {this.props.children}
+        if(localStorage.getItem('x-access-token') === null) {
+            return null;
+        } else {
+            return (
+                <div id="root">
+                    <div id="wrapper">
+                        <Menu />
+                        <div id="page-wrapper">
+                            {this.props.children}
+                        </div>
                     </div>
                 </div>
-            </div>
-        );
+            );
+        }
     }
 }
 
