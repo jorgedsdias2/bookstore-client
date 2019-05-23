@@ -19,11 +19,6 @@ import Menu from './components/Menu';
 
 class App extends Component {
     componentDidMount() {
-        if(localStorage.getItem('x-access-token') === null) {
-            notification('You can\'t access this address');
-            this.props.children.props.history.replace('/login');
-        }
-
         $('#side-menu').metisMenu();
     }
 
@@ -31,21 +26,30 @@ class App extends Component {
         $('#side-menu').metisMenu();
     }
 
-    render() {
+    isLoggedIn(props) {
         if(localStorage.getItem('x-access-token') === null) {
-            return null;
+            notification('You can\'t access this address');
+            props.children.props.history.replace('/login');
+            return false;
         } else {
-            return (
-                <div id="root">
+            return true;
+        }
+    }
+
+    render() {
+        const isLoggedIn = this.isLoggedIn(this.props);
+        return (
+            <div id="root">
+                { isLoggedIn &&
                     <div id="wrapper">
                         <Menu />
                         <div id="page-wrapper">
                             {this.props.children}
                         </div>
                     </div>
-                </div>
-            );
-        }
+                }
+            </div>
+        )
     }
 }
 

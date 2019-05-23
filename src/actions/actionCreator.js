@@ -1,4 +1,5 @@
 export function notification(msg) {
+    localStorage.setItem('msg', msg);
     return {type: 'ALERT', msg};
 }
 
