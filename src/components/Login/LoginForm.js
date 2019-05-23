@@ -7,7 +7,11 @@ class LoginForm extends Component {
 
     constructor(props) {
         super(props);
-        this.state = {msg:localStorage.getItem('msg')};
+        if(this.props.location.state) {
+            this.state = {msg:this.props.location.state.msg};
+        } else {
+            this.state = {msg:''};
+        }
         this.send = this.send.bind(this);
     }
 

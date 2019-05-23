@@ -28,8 +28,7 @@ class App extends Component {
 
     isLoggedIn(props) {
         if(localStorage.getItem('x-access-token') === null) {
-            notification('You can\'t access this address');
-            props.children.props.history.replace('/login');
+            props.children.props.history.replace('/login', {msg: 'You can\'t access this address'});
             return false;
         } else {
             return true;
