@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
 
-import {notification} from '../src/actions/actionCreator';
-
 import $ from 'jquery';
 
 // css import
