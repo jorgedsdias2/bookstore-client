@@ -1,6 +1,39 @@
 import React, { Component } from 'react';
+import {connect} from 'react-redux';
+import {withRouter} from "react-router";
 
-export default class AuthorForm extends Component {
+import AuthorApi from '../../api/AuthorApi';
+
+export class AuthorForm extends Component {
+
+    constructor(props) {
+        super(props);
+        if(this.props.match.params.id) {
+            this.state = {id:this.props.match.params.id, msg:'', alert:''};
+        } else {
+            this.state = {id:undefined, msg:'', alert:''};
+        }
+
+        this.send = this.send.bind(this);
+    }
+
+    componentDidMount() {
+        if(this.state.id) {
+            const author = this.props.authors.find(author => author._id === this.state.id);
+            this.name.value = author.name;
+        }
+    }
+
+    send(event) {
+        event.preventDefault();
+
+        if(this.state.id) {
+            this.props.updateAuthor(this.props, this.state.id, this.name.value);
+        } else {
+            console.log('Adicionando');
+        }
+    }
+
     render() {
         return (
             <div>
@@ -20,7 +53,7 @@ export default class AuthorForm extends Component {
                                     <div className="row">
                                         <div className="col-lg-6">
                                             {this.props.showMessage}
-                                            <form onSubmit={this.props.send}>
+                                            <form onSubmit={this.send}>
                                                 <div className="form-group">
                                                     <label>Name</label>
                                                     <input className="form-control" placeholder="Name" type="text" ref={(input) => this.name = input} />
@@ -40,3 +73,22 @@ export default class AuthorForm extends Component {
         );
     }
 }
+
+const mapStateToProps = state => {
+    return {
+        authors: state.author,
+        msg: state.notification.msg,
+        alert: state.notification.alert
+    }
+};
+
+const mapDispatchToProps = dispatch => {
+    return {
+        updateAuthor: (props, idValue, nameValue) => {
+            dispatch(AuthorApi.updateAuthor(props, idValue, nameValue));
+        }
+    }
+};
+
+const AuthorFormContainer = withRouter(connect(mapStateToProps, mapDispatchToProps) (AuthorForm));
+export default AuthorFormContainer;

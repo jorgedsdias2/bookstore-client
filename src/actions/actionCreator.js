@@ -1,9 +1,7 @@
-export function notification(msg) {
-    return {type: 'ALERT', msg};
+export function notification(msg, alert) {
+    return {type: 'ALERT', msg, alert};
 }
 
-export function author(type, authors) {
-    if(type === 'GET') {
-        return {type: 'GET', authors};
-    }
+export function listAuthors(authors) {
+    return {type: 'LIST', authors};
 }

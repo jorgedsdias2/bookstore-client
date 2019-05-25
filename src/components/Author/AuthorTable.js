@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
+import {connect} from 'react-redux';
 import {withRouter} from "react-router";
 
 import AuthorApi from '../../api/AuthorApi';
@@ -23,10 +23,10 @@ export class AuthorTable extends Component {
     }
 
     componentWillMount() {
-        this.props.getAuthors();
+        this.props.listAuthors();
     }
 
-    componentDidMount() {
+    componentDidUpdate() {
         $('#dataTables').DataTable({
             retrieve: true,
             responsive: true
@@ -40,6 +40,14 @@ export class AuthorTable extends Component {
 
     render() {
         if(this.props.authors) {
+            let showMessage = '';
+            if(this.props.msg) {
+                showMessage =
+                <div className={`alert alert-${this.props.alert}`} role="alert">
+                    {this.props.msg}
+                </div>
+            }
+
             return (
                 <div>
                     <div className="container-fluid">
@@ -57,30 +65,33 @@ export class AuthorTable extends Component {
                                     </div>
                                     <div className="panel-body">
                                         <div className="table-responsive">
-                                            {this.props.showMessage}
-                                            <table className="table table-striped table-bordered table-hover" id="dataTables">
-                                                <thead>
-                                                    <tr>
-                                                        <th>Author Name</th>
-                                                        <th>Actions</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    {
-                                                        this.props.authors.map(function(author) {
-                                                            return (
-                                                                <tr key={author._id}>
-                                                                    <td>{author.name}</td>
-                                                                    <td className="col-md-2">
-                                                                        <button onClick={(e) => {this.edit(e, `/authors/edit/${author._id}`)}} className="btn btn-primary"><span className="glyphicon glyphicon-edit"></span></button>&nbsp;
-                                                                        <button className="btn btn-danger"><span className="glyphicon glyphicon-remove"></span></button>
-                                                                    </td>
-                                                                </tr>
-                                                            );
-                                                        }.bind(this))
-                                                    }
-                                                </tbody>
-                                            </table>
+                                            {showMessage}
+                                            {
+                                                this.props.authors.size > 0 &&
+                                                <table className="table table-striped table-bordered table-hover" id="dataTables">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Author Name</th>
+                                                            <th>Actions</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        {
+                                                            this.props.authors.map(function(author) {
+                                                                return (
+                                                                    <tr key={author._id}>
+                                                                        <td>{author.name}</td>
+                                                                        <td className="col-md-2">
+                                                                            <button onClick={(e) => {this.edit(e, `/authors/edit/${author._id}`)}} className="btn btn-primary"><span className="glyphicon glyphicon-edit"></span></button>&nbsp;
+                                                                            <button className="btn btn-danger"><span className="glyphicon glyphicon-remove"></span></button>
+                                                                        </td>
+                                                                    </tr>
+                                                                );
+                                                            }.bind(this))
+                                                        }
+                                                    </tbody>
+                                                </table>
+                                            }
                                         </div>
                                     </div>
                                 </div>
@@ -101,7 +112,7 @@ AuthorTable.propTypes = {
 
 const mapStateToProps = state => {
     return {
-        authors: state.author.authors,
+        authors: state.author,
         msg: state.notification.msg,
         alert: state.notification.alert
     }
@@ -109,8 +120,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        getAuthors: () => {
-            dispatch(AuthorApi.getAuthors());
+        listAuthors: () => {
+            dispatch(AuthorApi.listAuthors());
         }
     }
 };

@@ -1,7 +1,7 @@
-import {notification, author} from '../actions/actionCreator';
+import {notification, listAuthors} from '../actions/actionCreator';
 
 export default class AuthorApi {
-    static getAuthors() {
+    static listAuthors() {
         return dispatch => {
             const request = {
                 method: 'GET',
@@ -18,36 +18,37 @@ export default class AuthorApi {
                     throw new Error('Error listing authors!');
                 }
             }).then(response => {
-                dispatch(author('GET', response.authors));
+                dispatch(listAuthors(response.authors));
             }).catch(error => {
-                dispatch(notification(error.message));
+                dispatch(notification(error.message, 'error'));
             });
         }
     }
 
-    static addAuthor(props, nameValue) {
+    static updateAuthor(props, idValue, nameValue) {
         return dispatch => {
             dispatch(notification(''));
 
             const request = {
-                method: 'POST',
-                body: JSON.stringify({name: nameValue}),
+                method: 'PUT',
+                body: JSON.stringify({name:nameValue}),
                 headers: new Headers({
                     'Content-type': 'application/json',
                     'x-access-token': localStorage.getItem('x-access-token')
                 })
             };
     
-            fetch('http://localhost:3000/api/authors/author', request).then(response => {
+            fetch(`http://localhost:3000/api/authors/author/${idValue}`, request).then(response => {
                 if(response.ok) {
                     return response.json();
                 } else {
-                    throw new Error('Error adding author!');
+                    throw new Error('Error editing author!');
                 }
             }).then(response => {
+                dispatch(notification(response.message, 'success'));
                 props.history.push('/authors');
             }).catch(error => {
-                dispatch(notification(error.message));
+                dispatch(notification(error.message, 'error'));
             });
         }
     }
