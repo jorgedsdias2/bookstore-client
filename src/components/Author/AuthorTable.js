@@ -134,7 +134,7 @@ AuthorTable.propTypes = {
 
 const mapStateToProps = state => {
     return {
-        authors: state.author,
+        authors: state.authors,
         msg: state.notification.msg,
         alert: state.notification.alert
     }

@@ -85,7 +85,7 @@ export class AuthorForm extends Component {
 
 const mapStateToProps = state => {
     return {
-        authors: state.author,
+        authors: state.authors,
         msg: state.notification.msg,
         alert: state.notification.alert
     }
