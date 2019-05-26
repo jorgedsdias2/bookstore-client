@@ -5,3 +5,7 @@ export function notification(msg, alert) {
 export function listAuthors(authors) {
     return {type: 'LIST', authors};
 }
+
+export function deleteAuthor(id) {
+    return {type: 'DELETE', id};
+}

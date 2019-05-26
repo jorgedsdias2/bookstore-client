@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import {withRouter} from "react-router";
+import {List} from 'immutable';
 
 import AuthorApi from '../../api/AuthorApi';
 
@@ -19,7 +20,13 @@ export class AuthorTable extends Component {
 
     constructor(props) {
         super(props);
+        if(this.props.location.state) {
+            this.state = {msg:this.props.location.state.msg, alert:this.props.location.state.alert, authors:[]};
+        } else {
+            this.state = {msg:'', alert:'', authors:[]};
+        }
         this.edit = this.edit.bind(this);
+        this.delete = this.delete.bind(this);
     }
 
     componentWillMount() {
@@ -33,18 +40,33 @@ export class AuthorTable extends Component {
         });
     }
 
+    componentWillReceiveProps(nextProps) {
+        if(nextProps.authors) {
+            this.setState({authors: nextProps.authors});
+        }
+
+        if(nextProps.msg) {
+            this.setState({msg: nextProps.msg, alert: nextProps.alert});
+        }
+    }
+
     edit(event, page) {
         event.preventDefault();
         this.props.history.push(page);
     }
 
+    delete(event, id) {
+        event.preventDefault();
+        this.props.removeAuthor(id);
+    }
+
     render() {
         if(this.props.authors) {
             let showMessage = '';
-            if(this.props.msg) {
+            if(this.state.msg) {
                 showMessage =
-                <div className={`alert alert-${this.props.alert}`} role="alert">
-                    {this.props.msg}
+                <div className={`alert alert-${this.state.alert}`} role="alert">
+                    {this.state.msg}
                 </div>
             }
 
@@ -64,10 +86,10 @@ export class AuthorTable extends Component {
                                         An List of Authors
                                     </div>
                                     <div className="panel-body">
+                                        {showMessage}
                                         <div className="table-responsive">
-                                            {showMessage}
                                             {
-                                                this.props.authors.size > 0 &&
+                                                this.state.authors.size > 0 &&
                                                 <table className="table table-striped table-bordered table-hover" id="dataTables">
                                                     <thead>
                                                         <tr>
@@ -77,13 +99,13 @@ export class AuthorTable extends Component {
                                                     </thead>
                                                     <tbody>
                                                         {
-                                                            this.props.authors.map(function(author) {
+                                                            this.state.authors.map(function(author) {
                                                                 return (
                                                                     <tr key={author._id}>
                                                                         <td>{author.name}</td>
                                                                         <td className="col-md-2">
                                                                             <button onClick={(e) => {this.edit(e, `/authors/edit/${author._id}`)}} className="btn btn-primary"><span className="glyphicon glyphicon-edit"></span></button>&nbsp;
-                                                                            <button className="btn btn-danger"><span className="glyphicon glyphicon-remove"></span></button>
+                                                                            <button onClick={(e) => {this.delete(e, author._id)}} className="btn btn-danger"><span className="glyphicon glyphicon-remove"></span></button>
                                                                         </td>
                                                                     </tr>
                                                                 );
@@ -122,6 +144,9 @@ const mapDispatchToProps = dispatch => {
     return {
         listAuthors: () => {
             dispatch(AuthorApi.listAuthors());
+        },
+        removeAuthor: (id) => {
+            dispatch(AuthorApi.removeAuthor(id));
         }
     }
 };

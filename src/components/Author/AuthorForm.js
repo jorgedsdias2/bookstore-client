@@ -8,29 +8,38 @@ export class AuthorForm extends Component {
 
     constructor(props) {
         super(props);
+        const author = {_id: '', name: ''};
         if(this.props.match.params.id) {
-            this.state = {id:this.props.match.params.id, msg:'', alert:''};
+            this.state = {id:this.props.match.params.id, msg:'', alert:'', author:author};
         } else {
-            this.state = {id:undefined, msg:'', alert:''};
+            this.state = {id:undefined, msg:'', alert:'', author:author};
         }
 
         this.send = this.send.bind(this);
     }
 
-    componentDidMount() {
+    componentWillMount() {
         if(this.state.id) {
             const author = this.props.authors.find(author => author._id === this.state.id);
-            this.name.value = author.name;
+            this.setState({author: author});
+        }
+    }
+
+    componentDidMount() {
+        if(this.state.id) {
+            this.name.value = this.state.author.name;
         }
     }
 
     send(event) {
         event.preventDefault();
-
+        const author = this.state.author;
+        author.name = this.name.value;
+        this.setState({author: author});
         if(this.state.id) {
-            this.props.updateAuthor(this.props, this.state.id, this.name.value);
+            this.props.updateAuthor(this.props, this.state.author);
         } else {
-            console.log('Adicionando');
+            this.props.addAuthor(this.props, this.state.author);
         }
     }
 
@@ -84,8 +93,11 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        updateAuthor: (props, idValue, nameValue) => {
-            dispatch(AuthorApi.updateAuthor(props, idValue, nameValue));
+        addAuthor: (props, author) => {
+            dispatch(AuthorApi.addAuthor(props, author));
+        },
+        updateAuthor: (props, author) => {
+            dispatch(AuthorApi.updateAuthor(props, author));
         }
     }
 };
