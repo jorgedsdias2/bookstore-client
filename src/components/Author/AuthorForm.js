@@ -31,6 +31,12 @@ export class AuthorForm extends Component {
         }
     }
 
+    componentWillReceiveProps(nextProps) {
+        if(nextProps.msg) {
+            this.setState({msg: nextProps.msg, alert: nextProps.alert});
+        }
+    }
+
     send(event) {
         event.preventDefault();
         const author = this.state.author;
@@ -44,6 +50,14 @@ export class AuthorForm extends Component {
     }
 
     render() {
+        let showMessage = '';
+        if(this.state.msg) {
+            showMessage =
+            <div className={`alert alert-${this.state.alert}`} role="alert">
+                {this.state.msg}
+            </div>
+        }
+
         return (
             <div>
                 <div className="container-fluid">
@@ -61,7 +75,7 @@ export class AuthorForm extends Component {
                                 <div className="panel-body">
                                     <div className="row">
                                         <div className="col-lg-6">
-                                            {this.props.showMessage}
+                                            {showMessage}
                                             <form onSubmit={this.send}>
                                                 <div className="form-group">
                                                     <label>Name</label>

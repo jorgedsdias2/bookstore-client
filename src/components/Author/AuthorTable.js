@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import {withRouter} from "react-router";
-import {List} from 'immutable';
 
 import AuthorApi from '../../api/AuthorApi';
 
@@ -70,6 +69,20 @@ export class AuthorTable extends Component {
                 </div>
             }
 
+            const authors = this.state.authors.map(function(author) {
+                return (
+                    <tr key={author._id}>
+                        <td>{author.name}</td>
+                        <td className="col-md-2">
+                            <button onClick={(e) => {this.edit(e, `/authors/edit/${author._id}`)}} className="btn btn-primary"><span className="glyphicon glyphicon-edit"></span></button>&nbsp;
+                            <button onClick={(e) => {this.delete(e, author._id)}} className="btn btn-danger"><span className="glyphicon glyphicon-remove"></span></button>
+                        </td>
+                    </tr>
+                );
+            }.bind(this));
+
+            const noAuthors = <tr><td colSpan="2">No authors found</td></tr>
+
             return (
                 <div>
                     <div className="container-fluid">
@@ -88,32 +101,17 @@ export class AuthorTable extends Component {
                                     <div className="panel-body">
                                         {showMessage}
                                         <div className="table-responsive">
-                                            {
-                                                this.state.authors.size > 0 &&
-                                                <table className="table table-striped table-bordered table-hover" id="dataTables">
-                                                    <thead>
-                                                        <tr>
-                                                            <th>Author Name</th>
-                                                            <th>Actions</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        {
-                                                            this.state.authors.map(function(author) {
-                                                                return (
-                                                                    <tr key={author._id}>
-                                                                        <td>{author.name}</td>
-                                                                        <td className="col-md-2">
-                                                                            <button onClick={(e) => {this.edit(e, `/authors/edit/${author._id}`)}} className="btn btn-primary"><span className="glyphicon glyphicon-edit"></span></button>&nbsp;
-                                                                            <button onClick={(e) => {this.delete(e, author._id)}} className="btn btn-danger"><span className="glyphicon glyphicon-remove"></span></button>
-                                                                        </td>
-                                                                    </tr>
-                                                                );
-                                                            }.bind(this))
-                                                        }
-                                                    </tbody>
-                                                </table>
-                                            }
+                                            <table className="table table-striped table-bordered table-hover" id="dataTables">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Author Name</th>
+                                                        <th>Actions</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    { this.state.authors.size > 0 ? authors : noAuthors }
+                                                </tbody>
+                                            </table>
                                         </div>
                                     </div>
                                 </div>

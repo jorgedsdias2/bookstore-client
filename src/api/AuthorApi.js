@@ -42,7 +42,7 @@ export default class AuthorApi {
                 if(response.ok) {
                     return response.json();
                 } else {
-                    throw new Error('Error editing author!');
+                    throw new Error('Error adding author!');
                 }
             }).then(response => {
                 props.history.push('/authors', {msg: response.message, alert: 'success'});
