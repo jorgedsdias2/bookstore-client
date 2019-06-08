@@ -3,6 +3,8 @@ import {notification, listAuthors, deleteAuthor} from '../actions/actionCreator'
 export default class AuthorApi {
     static listAuthors() {
         return dispatch => {
+            dispatch(notification(''));
+
             const request = {
                 method: 'GET',
                 headers: new Headers({
@@ -27,8 +29,6 @@ export default class AuthorApi {
 
     static addAuthor(props, author) {
         return dispatch => {
-            dispatch(notification(''));
-
             const request = {
                 method: 'POST',
                 body: JSON.stringify({name:author.name}),
@@ -54,8 +54,6 @@ export default class AuthorApi {
 
     static updateAuthor(props, author) {
         return dispatch => {
-            dispatch(notification(''));
-
             const request = {
                 method: 'PUT',
                 body: JSON.stringify({name:author.name}),
@@ -81,8 +79,6 @@ export default class AuthorApi {
 
     static removeAuthor(id) {
         return dispatch => {
-            dispatch(notification(''));
-
             const request = {
                 method: 'DELETE',
                 headers: new Headers({
@@ -98,8 +94,10 @@ export default class AuthorApi {
                     throw new Error('Error deleting author!');
                 }
             }).then(response => {
-                dispatch(notification(response.message, 'success'));
-                dispatch(deleteAuthor(id));
+                dispatch([
+                    notification(response.message, 'success'),
+                    deleteAuthor(id)
+                ]);
             }).catch(error => {
                 dispatch(notification(error.message, 'danger'));
             });

@@ -7,6 +7,7 @@ import './css/bootstrap.min.css';
 import './css/metisMenu.min.css';
 import './css/startmin.css';
 import './css/font-awesome.min.css';
+import './css/dashboard.css';
 
 // js import
 import './js/bootstrap.min.js';

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import {withRouter} from "react-router";
@@ -81,7 +82,7 @@ export class AuthorTable extends Component {
                 );
             }.bind(this));
 
-            const noAuthors = <tr><td colSpan="2">No authors found</td></tr>
+            const noAuthors = <tr><td>No authors found</td><td></td></tr>
 
             return (
                 <div>
@@ -108,9 +109,14 @@ export class AuthorTable extends Component {
                                                         <th>Actions</th>
                                                     </tr>
                                                 </thead>
-                                                <tbody>
-                                                    { this.state.authors.size > 0 ? authors : noAuthors }
-                                                </tbody>
+                                                    <ReactCSSTransitionGroup
+                                                    transitionName="dashboard"
+                                                    transitionEnter={false}
+                                                    transitionLeaveTimeout={300}
+                                                    component="tbody">
+                                                        {/* { this.state.authors.size > 0 ? authors : noAuthors } */}
+                                                        {authors}
+                                                    </ReactCSSTransitionGroup>
                                             </table>
                                         </div>
                                     </div>
