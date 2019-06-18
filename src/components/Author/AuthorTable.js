@@ -109,14 +109,14 @@ export class AuthorTable extends Component {
                                                         <th>Actions</th>
                                                     </tr>
                                                 </thead>
-                                                    <ReactCSSTransitionGroup
-                                                    transitionName="dashboard"
-                                                    transitionEnter={false}
-                                                    transitionLeaveTimeout={300}
-                                                    component="tbody">
-                                                        {/* { this.state.authors.size > 0 ? authors : noAuthors } */}
-                                                        {authors}
-                                                    </ReactCSSTransitionGroup>
+                                                <ReactCSSTransitionGroup
+                                                transitionName="dashboard"
+                                                transitionEnter={false}
+                                                transitionLeaveTimeout={300}
+                                                component="tbody">
+                                                    {/* { this.state.authors.size > 0 ? authors : noAuthors } */}
+                                                    {authors}
+                                                </ReactCSSTransitionGroup>
                                             </table>
                                         </div>
                                     </div>
