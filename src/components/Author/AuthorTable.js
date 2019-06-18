@@ -82,6 +82,7 @@ export class AuthorTable extends Component {
                 );
             }.bind(this));
 
+            {/* { this.state.authors.size > 0 ? authors : noAuthors } */}
             const noAuthors = <tr><td>No authors found</td><td></td></tr>
 
             return (
@@ -114,7 +115,6 @@ export class AuthorTable extends Component {
                                                 transitionEnter={false}
                                                 transitionLeaveTimeout={300}
                                                 component="tbody">
-                                                    {/* { this.state.authors.size > 0 ? authors : noAuthors } */}
                                                     {authors}
                                                 </ReactCSSTransitionGroup>
                                             </table>
